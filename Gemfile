@@ -16,6 +16,13 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Support uniform validation for environment variables and secrets.
+gem 'base64' # Ruby 3.4.0 warnings
+gem 'bigdecimal' # Ruby 3.4.0 warnings
+gem 'mutex_m' # Ruby 3.4.0 warnings
+gem 'dry-validation', "~> 1.10.0"
+gem 'config'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

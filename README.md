@@ -41,3 +41,23 @@ rails _6.1.7.7_ new Weather \
   --skip-turbolinks \
   --skip-webpack-install
 ```
+
+## Configuration
+
+### Weather API key
+
+You will need to set up the app with a valid API key for the weather service. For security reasons, this cannot be
+commited to the repository with the application code.
+
+For demonstrating this app, just use the local settings override file as needed by
+the [Config gem](https://github.com/rubyconfig/config).
+
+1. Go to [Weather API](https://www.weatherapi.com) and get your free API key.
+2. Copy `config/settings.local.sample.yml` to `config/settings.local.yml` using this command:
+   - `cp config/settings.local.sample.yml config/settings.local.yml`
+3. Replace the value for `WEATHER_API_KEY` with your API key.
+
+In production, the API key will be stored as a secret or as an environment variable, which is the default setup in this
+application.
+
+

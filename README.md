@@ -21,6 +21,12 @@
 - Use a public source code repository (GitHub, etc) to store your code
 - Send us the link to your completed code
 
+## Implementation notes
+
+- The Weather API does not return ZIP code information, which would also be limiting for the worldwide weather data it
+  returns. The API response contains latitude and longitude, so this app will cache using those values as its key.
+-
+
 ## Setup
 
 Because I noticed in the job description that the position will be supporting Rails 5 and 6 apps, I created a new Rails

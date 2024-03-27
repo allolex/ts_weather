@@ -1,3 +1,5 @@
+# Handle the data representation and light serialization in our minimal use-case.
+# If this becomes more complex, consider an ActiveSupport::Model class.
 Forecast = Data.define(
   :current_c,
   :current_f,

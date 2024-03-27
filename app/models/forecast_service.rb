@@ -8,10 +8,12 @@ class QueryError < StandardError; end
 
 class QueryPermissionError < StandardError; end
 
+# Handle querying the Weather API and any errors that might occur.
 class ForecastService
   URL = "http://api.weatherapi.com/v1/forecast.json?key=#{Settings.weather_api_key}&days=1&aqi=no&alerts=no"
 
   def self.get(location)
+    # Query must contain at least two letters or five digits to justify the expense of calling the API.
     raise InvalidQueryError unless location =~ /\w{2,}|\d{5,}/
 
     response = Faraday.get(url_for_location(location))

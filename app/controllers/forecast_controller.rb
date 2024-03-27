@@ -3,6 +3,8 @@ class ForecastController < ApplicationController
 
   end
 
+  # Display the current forecast from the ForecastService and cache the result for 30 minutes.
+  # Pass @fetched_from_cache to the view to make sure the user knows whether the cache is being used.
   def display
     @fetched_from_cache = true
 

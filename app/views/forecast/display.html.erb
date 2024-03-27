@@ -18,3 +18,9 @@
 </table>
 
 <%= link_to "Get forecast for another location", "/forecast" %>
+
+<% if @fetched_from_cache %>
+  <em>This result was fetched from cache.</em>
+<% else %>
+  <em>This result came directly from the Weather API.</em>
+<% end %>

@@ -1,0 +1,20 @@
+<h1>Forecast for <%= @forecast[:location_name] %></h1>
+
+<table>
+  <tbody>
+  <tr>
+    <th>Current Temperature</th>
+    <td><%= @forecast[:current] %></td>
+  </tr>
+  <tr>
+    <th>Daily High</th>
+    <td><%= @forecast[:high] %></td>
+  </tr>
+  <tr>
+    <th>Daily Low</th>
+    <td><%= @forecast[:low] %></td>
+  </tr>
+  </tbody>
+</table>
+
+<%= link_to "Get forecast for another location", "/forecast" %>

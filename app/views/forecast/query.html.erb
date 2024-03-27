@@ -1,0 +1,5 @@
+<%= form_with url: "/forecast", method: :post do |form| %>
+  <%= form.label :query, "Get a weather forecast:" %>
+  <%= form.text_field :query %>
+  <%= form.submit "Get Forecast" %>
+<% end %>

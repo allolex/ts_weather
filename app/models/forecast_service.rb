@@ -25,23 +25,19 @@ class ForecastService
       raise QueryError, parsed_response&.dig("error", "message") || "Unknown query error"
     end
 
-    {
-      current: display_temps(
-        current(parsed_response)["temp_c"],
-        current(parsed_response)["temp_f"]
-      ),
-      high: display_temps(
-        forecast(parsed_response)["maxtemp_c"],
-        forecast(parsed_response)["maxtemp_f"]
-      ),
-      low: display_temps(
-        forecast(parsed_response)["mintemp_c"],
-        forecast(parsed_response)["mintemp_f"]
-      ),
+    forecast = ::Forecast.new(
+      current_c: current(parsed_response)["temp_c"],
+      current_f: current(parsed_response)["temp_f"],
+      high_c: forecast(parsed_response)["maxtemp_c"],
+      high_f: forecast(parsed_response)["maxtemp_f"],
+      low_c: forecast(parsed_response)["mintemp_c"],
+      low_f: forecast(parsed_response)["mintemp_f"],
       latitude: location(parsed_response)["lat"],
       longitude: location(parsed_response)["lon"],
-      location_name: location(parsed_response)["name"],
-    }
+      location_name: location(parsed_response)["name"]
+    )
+
+    forecast
   end
 
   def self.url_for_location(location)
@@ -65,11 +61,4 @@ class ForecastService
   end
 
   private_class_method :location
-
-  def self.display_temps(celsius, fahrenheit)
-    "#{celsius}º C / #{fahrenheit}º F"
-  end
-
-  private_class_method :display_temps
-
 end

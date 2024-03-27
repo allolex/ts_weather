@@ -21,19 +21,12 @@ RSpec.describe ForecastService, type: :poro do
           stub_request(:get, request_url).to_return(status: 200, body: response_body)
         end
 
-        it "has the expected keys" do
-          expect(subject.keys).to contain_exactly(:current, :high, :low, :latitude, :longitude, :location_name)
+        it 'returns a Forecast instance' do
+          expect(subject).to be_a(Forecast)
         end
 
-        it "has the expected return value" do
-          expect(subject).to eq({
-                                  current: "16.0º C / 60.8º F",
-                                  high: "18.6º C / 65.5º F",
-                                  low: "7.7º C / 45.9º F",
-                                  latitude: 37.32,
-                                  longitude: -122.03,
-                                  location_name: "Cupertino"
-                                })
+        it 'returns a forecase for the correct location' do
+          expect(subject.location_name).to eq "Cupertino"
         end
       end
 

@@ -1,0 +1,75 @@
+require_relative '../rails_helper'
+
+# plain old ruby object - poro
+RSpec.describe ForecastService, type: :poro do
+  describe '.get' do
+    subject { described_class.get(location) }
+
+    let(:request_url) do
+      described_class.url_for_location(location)
+    end
+
+    let(:location) { '1 Infinite Loop, Cupertino, CA' }
+
+    context 'with a valid API key' do
+      context 'with a valid location' do
+        let(:response_body) do
+          file_fixture("success_response.json").read
+        end
+
+        before do
+          stub_request(:get, request_url).to_return(status: 200, body: response_body)
+        end
+
+        it "has the expected keys" do
+          expect(subject.keys).to contain_exactly(:current, :high, :low, :latitude, :longitude, :location_name)
+        end
+
+        it "has the expected return value" do
+          expect(subject).to eq({
+                                  current: "16.0º C / 60.8º F",
+                                  high: "18.6º C / 65.5º F",
+                                  low: "7.7º C / 45.9º F",
+                                  latitude: 37.32,
+                                  longitude: -122.03,
+                                  location_name: "Cupertino"
+                                })
+        end
+      end
+
+      context 'with an invalid location' do
+        let(:location) { 'X' }
+
+        it "raises an InvalidQueryError" do
+          expect { subject }.to raise_error(InvalidQueryError, /Query not valid.*location/)
+        end
+      end
+
+      context 'with an invalid API key' do
+        before do
+          stub_request(:get, request_url).to_return(status: 403, body: "{}")
+        end
+
+        it 'raises a QueryError with a useful message' do
+          expect { subject }.to raise_error(QueryPermissionError, /Is your API key valid/)
+        end
+      end
+    end
+  end
+
+  describe '.url_for_location' do
+    let(:location) { '1 Infinite Loop, Cupertino, CA' }
+
+    let(:request_url) { described_class.url_for_location(location) }
+
+    context 'with a valid location' do
+      it 'returns a valid URL' do
+        expect { URI.parse(request_url) rescue nil }.to_not raise_error
+      end
+
+      it 'returns a URL with the current API key' do
+        expect(request_url).to match(/testkey/)
+      end
+    end
+  end
+end

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :deletemes
+
+  root 'forecast#query'
   get 'forecast', controller: :forecast, action: :query
   post 'forecast', controller: :forecast, action: :display
 
